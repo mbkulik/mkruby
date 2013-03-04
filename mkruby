@@ -1,0 +1,61 @@
+#!/bin/sh
+
+RUBY_VERSION=ruby-1.9.3-p392
+MD5_HASH=f689a7b61379f83cbbed3c7077d83859
+CFLAGS="-march=k8 -O2 -pipe"
+
+function fetch()
+{
+	if [ ! -f "$RUBY_VERSION".tar.gz ]; then
+		ftp ftp://ftp.ruby-lang.org/pub/ruby/"$RUBY_VERSION".tar.gz
+	fi
+
+	if [ "$MD5_HASH" !=  `md5 -q "$RUBY_VERSION".tar.gz` ]; then
+		echo "MD5 checksum does not match!\nDelete $RUBY_VERSION.tar.gz and rerun mkruby fetch"
+	fi
+}
+
+function extract()
+{
+	if [ ! -d "$RUBY_VERSION" ]; then
+		if [ -f "$RUBY_VERSION".tar.gz ]; then
+			`tar -xzvf "$RUBY_VERSION".tar.gz`
+		fi
+	fi
+}
+
+function build()
+{
+	if [ -d "$RUBY_VERSION" ]; then
+		cd $RUBY_VERSION
+		./configure --with-opt-dir=/usr/local
+		CFLAGS="$CFLAGS" make 
+		cd ..
+	fi
+}
+
+function install()
+{
+	if [ -d "$RUBY_VERSION" ]; then
+		cd $RUBY_VERSION
+		sudo make install
+		cd ..
+	fi
+}
+
+case "$1" in
+	'fetch')
+		fetch
+		;;
+	'extract')
+		extract
+		;;
+	'build')
+		build
+		;;
+	'install')
+		install
+		;;
+	*)
+		echo "usage: mkruby [fetch|extract|build|install]"
+esac
