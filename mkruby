@@ -4,7 +4,7 @@ RUBY_VERSION=ruby-1.9.3-p392
 MD5_HASH=f689a7b61379f83cbbed3c7077d83859
 CFLAGS="-march=k8 -O2 -pipe"
 
-function fetch()
+fetch()
 {
 	if [ ! -f "$RUBY_VERSION".tar.gz ]; then
 		ftp ftp://ftp.ruby-lang.org/pub/ruby/"$RUBY_VERSION".tar.gz
@@ -15,7 +15,7 @@ function fetch()
 	fi
 }
 
-function extract()
+extract()
 {
 	if [ ! -d "$RUBY_VERSION" ]; then
 		if [ -f "$RUBY_VERSION".tar.gz ]; then
@@ -24,7 +24,7 @@ function extract()
 	fi
 }
 
-function build()
+build()
 {
 	if [ -d "$RUBY_VERSION" ]; then
 		cd $RUBY_VERSION
@@ -34,7 +34,7 @@ function build()
 	fi
 }
 
-function install()
+install()
 {
 	if [ -d "$RUBY_VERSION" ]; then
 		cd $RUBY_VERSION
