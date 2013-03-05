@@ -4,7 +4,7 @@ RUBY_VERSION=ruby-1.9.3-p392
 MD5_HASH=f689a7b61379f83cbbed3c7077d83859
 CFLAGS="-march=k8 -O2 -pipe"
 
-fetch()
+mkr_fetch()
 {
 	if [ ! -f "$RUBY_VERSION".tar.gz ]; then
 		ftp ftp://ftp.ruby-lang.org/pub/ruby/"$RUBY_VERSION".tar.gz
@@ -15,7 +15,7 @@ fetch()
 	fi
 }
 
-extract()
+mkr_extract()
 {
 	if [ ! -d "$RUBY_VERSION" ]; then
 		if [ -f "$RUBY_VERSION".tar.gz ]; then
@@ -24,17 +24,17 @@ extract()
 	fi
 }
 
-build()
+mkr_build()
 {
 	if [ -d "$RUBY_VERSION" ]; then
 		cd $RUBY_VERSION
 		./configure --with-opt-dir=/usr/local
-		CFLAGS="$CFLAGS" make 
+		CFLAGS="$CFLAGS" make -e
 		cd ..
 	fi
 }
 
-install()
+mkr_install()
 {
 	if [ -d "$RUBY_VERSION" ]; then
 		cd $RUBY_VERSION
@@ -45,16 +45,16 @@ install()
 
 case "$1" in
 	'fetch')
-		fetch
+		mkr_fetch
 		;;
 	'extract')
-		extract
+		mkr_extract
 		;;
 	'build')
-		build
+		mkr_build
 		;;
 	'install')
-		install
+		mkr_install
 		;;
 	*)
 		echo "usage: mkruby [fetch|extract|build|install]"
