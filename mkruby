@@ -10,7 +10,7 @@ mkr_fetch()
 		ftp ftp://ftp.ruby-lang.org/pub/ruby/"$RUBY_VERSION".tar.gz
 	fi
 
-	if [ "$MD5_HASH" !=  `md5 -q "$RUBY_VERSION".tar.gz` ]; then
+	if [ "$MD5_HASH" != `md5 -q "$RUBY_VERSION".tar.gz` ]; then
 		echo "MD5 checksum does not match!\nDelete $RUBY_VERSION.tar.gz and rerun mkruby fetch"
 	fi
 }
@@ -19,7 +19,7 @@ mkr_extract()
 {
 	if [ ! -d "$RUBY_VERSION" ]; then
 		if [ -f "$RUBY_VERSION".tar.gz ]; then
-			`tar -xzvf "$RUBY_VERSION".tar.gz`
+			tar -xzvf "$RUBY_VERSION".tar.gz
 		fi
 	fi
 }
@@ -28,8 +28,10 @@ mkr_build()
 {
 	if [ -d "$RUBY_VERSION" ]; then
 		cd $RUBY_VERSION
+		export CFLAGS="$CFLAGS"	
 		./configure --with-opt-dir=/usr/local
-		CFLAGS="$CFLAGS" make -e
+		make
+		unset CFLAGS
 		cd ..
 	fi
 }
