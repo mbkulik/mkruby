@@ -1,7 +1,7 @@
 #!/bin/sh
 
-RUBY_VERSION=ruby-1.9.3-p392
-MD5_HASH=f689a7b61379f83cbbed3c7077d83859
+RUBY_VERSION=ruby-2.0.0-p0
+MD5_HASH=50d307c4dc9297ae59952527be4e755d
 CFLAGS="-march=k8 -O2 -pipe"
 
 mkr_fetch()
@@ -28,7 +28,11 @@ mkr_build()
 {
 	if [ -d "$RUBY_VERSION" ]; then
 		cd $RUBY_VERSION
-		export CFLAGS="$CFLAGS"	
+		export CFLAGS="$CFLAGS"
+		patch -p0 < ../patches/patch-common_mk
+		patch -p0 < ../patches/patch-lib_fileutils_rb
+		patch -p0 < ../patches/patch-lib_rubygems_dependency_installer_rb
+		patch -p0 < ../patches/patch-lib_rubygems_ext_builder_rb
 		./configure --with-opt-dir=/usr/local
 		make
 		unset CFLAGS
@@ -46,6 +50,12 @@ mkr_install()
 }
 
 case "$1" in
+	'all')
+		mkr_fetch
+		mkr_extract
+		mkr_build
+		mkr_install
+		;;
 	'fetch')
 		mkr_fetch
 		;;
@@ -59,5 +69,5 @@ case "$1" in
 		mkr_install
 		;;
 	*)
-		echo "usage: mkruby [fetch|extract|build|install]"
+		echo "usage: mkruby [all|fetch|extract|build|install]"
 esac
