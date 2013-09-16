@@ -7,7 +7,7 @@ CFLAGS="-march=k8 -O2 -pipe"
 mkr_fetch()
 {
 	if [ ! -f "$RUBY_VERSION".tar.gz ]; then
-		ftp http://cache.ruby-lang.org/pub/ruby/"$RUBY_VERSION".tar.gz
+		curl -O http://cache.ruby-lang.org/pub/ruby/"$RUBY_VERSION".tar.gz
 	fi
 
 	if [ "$MD5_HASH" != `md5 -q "$RUBY_VERSION".tar.gz` ]; then
