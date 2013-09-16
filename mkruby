@@ -1,13 +1,13 @@
 #!/bin/sh
 
-RUBY_VERSION=ruby-2.0.0-p195
-MD5_HASH=0672e5af309ae99d1703d0e96eff8ea5
+RUBY_VERSION=ruby-2.0.0-p247
+MD5_HASH=c351450a0bed670e0f5ca07da3458a5b
 CFLAGS="-march=k8 -O2 -pipe"
 
 mkr_fetch()
 {
 	if [ ! -f "$RUBY_VERSION".tar.gz ]; then
-		ftp ftp://ftp.ruby-lang.org/pub/ruby/"$RUBY_VERSION".tar.gz
+		ftp http://cache.ruby-lang.org/pub/ruby/"$RUBY_VERSION".tar.gz
 	fi
 
 	if [ "$MD5_HASH" != `md5 -q "$RUBY_VERSION".tar.gz` ]; then
