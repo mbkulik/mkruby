@@ -1,0 +1,12 @@
+mkruby is a simple shell script to fetch and install the latest 
+ruby 1.9.3 or 2.0.0  patch set on OpenBSD 5.3 i386/amd64
+
+requirements:
+
+	devel/libffi
+	devel/libyaml
+	shells/bash 
+	
+usage: mkruby [1.9.3|2.0.0]
+
+* Don't forget to tweak the CFLAGS variable for the system you are building on

@@ -1,7 +1,5 @@
 #!/bin/sh
 
-RUBY_VERSION=ruby-2.0.0-p247
-MD5_HASH=c351450a0bed670e0f5ca07da3458a5b
 CFLAGS="-march=k8 -O2 -pipe"
 
 mkr_fetch()
@@ -11,7 +9,7 @@ mkr_fetch()
 	fi
 
 	if [ "$MD5_HASH" != `md5 -q "$RUBY_VERSION".tar.gz` ]; then
-		echo "MD5 checksum does not match!\nDelete $RUBY_VERSION.tar.gz and rerun mkruby fetch"
+		echo "MD5 checksum does not match!\nDelete $RUBY_VERSION.tar.gz and rerun mkruby"
 	fi
 }
 
@@ -27,13 +25,16 @@ mkr_extract()
 mkr_build()
 {
 	if [ -d "$RUBY_VERSION" ]; then
-		cd $RUBY_VERSION
+		cd $RUBY_VERSION	
 		export CFLAGS="$CFLAGS"
-		patch -p0 < ../patches/patch-common_mk
-		patch -p0 < ../patches/patch-lib_fileutils_rb
-		patch -p0 < ../patches/patch-lib_rubygems_dependency_installer_rb
-		patch -p0 < ../patches/patch-lib_rubygems_ext_builder_rb
-		./configure --with-opt-dir=/usr/local
+		
+		for patch_file in ../patches/$PATCH_DIR/*; do
+			patch -p0 < $patch_file
+		done	
+		
+		# bash needed to build 2.0.0, just use it all the time
+		bash ./configure --with-opt-dir=/usr/local
+		
 		make
 		unset CFLAGS
 		cd ..
@@ -50,24 +51,25 @@ mkr_install()
 }
 
 case "$1" in
-	'all')
-		mkr_fetch
-		mkr_extract
-		mkr_build
-		mkr_install
+	'1.9.3')
+		echo "installing ruby 1.9.3-p448"
+		RUBY_VERSION=ruby-1.9.3-p448
+		PATCH_DIR=1.9.3
+		MD5_HASH=a893cff26bcf351b8975ebf2a63b1023
 		;;
-	'fetch')
-		mkr_fetch
-		;;
-	'extract')
-		mkr_extract
-		;;
-	'build')
-		mkr_build
-		;;
-	'install')
-		mkr_install
+	'2.0.0')
+		echo "installing ruby 2.0.0-p247"
+		RUBY_VERSION=ruby-2.0.0-p247
+		PATCH_DIR=2.0.0
+		MD5_HASH=c351450a0bed670e0f5ca07da3458a5b
 		;;
 	*)
-		echo "usage: mkruby [all|fetch|extract|build|install]"
+		echo "usage: mkruby [1.9.3|2.0.0]"
+		exit 1
+		;;
 esac
+
+mkr_fetch
+mkr_extract
+mkr_build
+mkr_install
