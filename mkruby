@@ -72,4 +72,4 @@ esac
 mkr_fetch
 mkr_extract
 mkr_build
-#mkr_install
+mkr_install
