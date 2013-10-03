@@ -8,3 +8,5 @@ requirements:
 	shells/bash 
 	
 usage: mkruby [1.9.3|2.0.0]
+
+* Don't forget to tweak the CFLAGS variable for the system you are building on
