@@ -1,5 +1,5 @@
-mkruby is a simple shell script to fetch and install the latest ruby 1.9.3 or 2.0.0 
-patch set on OpenBSD 5.3 i386/amd64
+mkruby is a simple shell script to fetch and install the latest 
+ruby 1.9.3 or 2.0.0  patch set on OpenBSD 5.3 i386/amd64
 
 requirements:
 
