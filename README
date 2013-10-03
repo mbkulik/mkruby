@@ -7,6 +7,4 @@ requirements:
 	devel/libyaml
 	shells/bash 
 	
-	bash shell is only required when installing ruby 2.0.0
-	
 usage: mkruby [1.9.3|2.0.0]

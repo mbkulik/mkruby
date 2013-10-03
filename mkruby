@@ -32,7 +32,9 @@ mkr_build()
 			patch -p0 < $patch_file
 		done	
 		
-		./configure --with-opt-dir=/usr/local
+		# bash needed to build 2.0.0, just use it all the time
+		bash ./configure --with-opt-dir=/usr/local
+		
 		make
 		unset CFLAGS
 		cd ..
