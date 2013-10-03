@@ -1,0 +1,12 @@
+mkruby is a simple shell script to fetch and install the latest ruby 1.9.3 or 2.0.0 
+patch set on OpenBSD 5.3 i386/amd64
+
+requirements:
+
+	devel/libffi
+	devel/libyaml
+	shells/bash 
+	
+	bash shell is only required when installing ruby 2.0.0
+	
+usage: mkruby [1.9.3|2.0.0]
