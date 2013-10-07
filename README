@@ -6,7 +6,8 @@ requirements:
 	devel/libffi
 	devel/libyaml
 	shells/bash 
+	curl
 	
-usage: mkruby [1.9.3|2.0.0]
+usage: mkruby [1.9.3|2.0.0] [fetch|extract|build|install|all]
 
 * Don't forget to tweak the CFLAGS variable for the system you are building on

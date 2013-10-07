@@ -52,24 +52,45 @@ mkr_install()
 
 case "$1" in
 	'1.9.3')
-		echo "installing ruby 1.9.3-p448"
 		RUBY_VERSION=ruby-1.9.3-p448
 		PATCH_DIR=1.9.3
 		MD5_HASH=a893cff26bcf351b8975ebf2a63b1023
 		;;
 	'2.0.0')
-		echo "installing ruby 2.0.0-p247"
 		RUBY_VERSION=ruby-2.0.0-p247
 		PATCH_DIR=2.0.0
 		MD5_HASH=c351450a0bed670e0f5ca07da3458a5b
 		;;
 	*)
-		echo "usage: mkruby [1.9.3|2.0.0]"
+		echo "usage: mkruby [1.9.3|2.0.0] [fetch|extract|build|install|all]"
 		exit 1
 		;;
 esac
 
-mkr_fetch
-mkr_extract
-mkr_build
-mkr_install
+case "$2" in
+	'all')
+		"Installing $RUBY_VERSION"
+		mkr_fetch
+		mkr_extract
+		mkr_build
+		mkr_install
+		;;
+	'fetch')
+		echo "Fetching $RUBY_VERSION"
+		mkr_fetch
+		;;
+	'extract')
+		echo "Extracting $RUBY_VERSION"
+		mkr_extract
+		;;
+	'build')
+		echo "Building $RUBY_VERSION"
+		mkr_build
+		;;
+	'install')
+		echo "Installing $RUBY_VERSION"
+		mkr_install
+		;;
+	*)
+		echo "usage: mkruby [1.9.3|2.0.0] [fetch|extract|build|install|all]"
+esac
