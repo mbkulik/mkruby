@@ -93,4 +93,6 @@ case "$2" in
 		;;
 	*)
 		echo "usage: mkruby [1.9.3|2.0.0] [fetch|extract|build|install|all]"
+		exit 1
+		;;
 esac
