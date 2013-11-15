@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CFLAGS="-march=k8 -O2 -pipe"
+CFLAGS="-O2 -fPIC -pipe"
 
 mkr_fetch()
 {
